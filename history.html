@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Work History</title>
+  <style>
+    /* 01 - GLOBAL STYLE */
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 20px; font-family: Arial, sans-serif; background: #eef2f7; }
+    
+    .card { 
+      background: white; 
+      border-radius: 20px; 
+      padding: 25px; 
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+      position: relative;
+    }
+
+    .view-label { 
+      position: absolute; 
+      top: 15px; 
+      right: 20px; 
+      font-weight: bold; 
+      color: #1847d1; 
+      font-size: 13px; 
+    }
+
+    h2 { color: #1847d1; margin-top: 0; text-align: center; }
+    
+    /* 02 - LOG ITEM STYLE */
+    .log-item { padding: 15px; border-bottom: 1px solid #eee; }
+    .log-item:last-child { border-bottom: none; }
+    .time { color: #666; font-size: 13px; margin-top: 4px; }
+    .emp-name { font-weight: bold; color: #1847d1; font-size: 16px; }
+    .area-badge { background: #e8f0fe; color: #1976d2; padding: 2px 8px; border-radius: 5px; font-size: 14px; font-weight: bold; }
+
+    /* 03 - ACTION BUTTON */
+    .back-btn { 
+      margin-top: 20px; 
+      width: 100%; 
+      padding: 15px; 
+      border-radius: 10px; 
+      border: none; 
+      background: #5a5a5a; 
+      color: white; 
+      font-weight: bold; 
+      cursor: pointer;
+    }
+  
+    /* 99 - MODERN UI REFRESH */
+    :root {
+      --app-bg: #eef3f8;
+      --app-surface: #ffffff;
+      --app-surface-soft: #f7fafc;
+      --app-text: #13202f;
+      --app-muted: #65758b;
+      --app-primary: #1769e0;
+      --app-primary-dark: #0f4fb3;
+      --app-border: #d8e0ea;
+      --app-shadow: 0 14px 38px rgba(20, 42, 72, 0.16);
+      --app-radius: 16px;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(23, 105, 224, 0.13), transparent 30%),
+        linear-gradient(180deg, #f7fbff 0%, var(--app-bg) 100%) !important;
+      color: var(--app-text);
+      font-family: Arial, sans-serif;
+    }
+
+    .card,
+    .page,
+    .admin-card,
+    .room-report-card,
+    .report-card,
+    .task-card,
+    .modal-card,
+    .custom-confirm-box {
+      background: rgba(255,255,255,0.96) !important;
+      border: 1px solid rgba(216, 224, 234, 0.95) !important;
+      border-radius: var(--app-radius) !important;
+      box-shadow: var(--app-shadow) !important;
+    }
+
+    h1, h2, h3 {
+      color: var(--app-text);
+      letter-spacing: 0;
+    }
+
+    .view-tag,
+    .mini-header,
+    .admin-dashboard-title {
+      background: linear-gradient(135deg, #10243d, #1769e0) !important;
+      color: #fff !important;
+      border-radius: 12px !important;
+      box-shadow: 0 8px 20px rgba(23, 105, 224, 0.22) !important;
+    }
+
+    input,
+    select,
+    textarea {
+      border: 1px solid var(--app-border) !important;
+      border-radius: 12px !important;
+      background: #fff !important;
+      color: var(--app-text) !important;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.75) !important;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--app-primary) !important;
+      box-shadow: 0 0 0 3px rgba(23, 105, 224, 0.16) !important;
+    }
+
+    button {
+      border-radius: 13px !important;
+      background: linear-gradient(135deg, var(--app-primary), var(--app-primary-dark)) !important;
+      box-shadow: 0 8px 18px rgba(23, 105, 224, 0.22) !important;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+    }
+
+    button:active {
+      transform: translateY(1px) scale(0.99);
+      box-shadow: 0 5px 12px rgba(23, 105, 224, 0.18) !important;
+    }
+
+    .green {
+      background: linear-gradient(135deg, #16843a, #0f6f31) !important;
+      color: white !important;
+    }
+
+    .yellow {
+      background: linear-gradient(135deg, #ffd65a, #f3aa18) !important;
+      color: #1f2937 !important;
+    }
+
+    .red {
+      background: linear-gradient(135deg, #e34d4d, #b91c1c) !important;
+      color: white !important;
+    }
+
+    .back,
+    .gray,
+    .grey {
+      background: linear-gradient(135deg, #667085, #475467) !important;
+      color: white !important;
+    }
+
+    .room-button-wrap,
+    .area-button,
+    .task-button,
+    .employee-button,
+    .issue-button,
+    .status-row,
+    .summary-card,
+    .report-row,
+    .admin-list-row {
+      border-radius: 14px !important;
+      border: 1px solid rgba(255,255,255,0.38) !important;
+    }
+
+    .room-number {
+      letter-spacing: 0;
+    }
+
+    .room-counter,
+    .summary-label,
+    .small-text {
+      color: var(--app-muted);
+    }
+
+    table {
+      border-radius: 14px;
+      overflow: hidden;
+      background: white;
+      box-shadow: 0 8px 22px rgba(20, 42, 72, 0.08);
+    }
+
+    th {
+      background: #eaf1f8 !important;
+      color: #20324a !important;
+    }
+
+    td, th {
+      border-color: var(--app-border) !important;
+    }
+
+    .loading-bg {
+      backdrop-filter: blur(4px);
+    }
+
+    .spinner {
+      border-color: #d5e3f3 !important;
+      border-top-color: var(--app-primary) !important;
+    }
+
+    @media (max-width: 760px) {
+      body { padding: 8px !important; }
+      .card, .page, .admin-card { border-radius: 16px !important; }
+      button { min-height: 44px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="view-label">V6 logs.html</div>
+    <h2>Recent Activity</h2>
+    <div id="logContainer">Loading logs...</div>
+    <button class="back-btn" onclick="window.location.href='schedule.html'">BACK TO SCHEDULE</button>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBgq_ooBeEN4noEyIxYPLVokgM6RjCO648",
+      authDomain: "gms-task-tracker.firebaseapp.com",
+      projectId: "gms-task-tracker",
+      storageBucket: "gms-task-tracker.firebasestorage.app",
+      messagingSenderId: "790880979860",
+      appId: "1:790880979860:web:6faee2a6e56955af3c1d81"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    async function loadLogs() {
+      // Pull last 20 completions
+      const q = query(collection(db, "logs"), orderBy("timestamp", "desc"), limit(20));
+      const snap = await getDocs(q);
+      const container = document.getElementById("logContainer");
+      container.innerHTML = "";
+      
+      snap.forEach(doc => {
+        const data = doc.data();
+        
+        // Format the date/time nicely
+        const dateObj = data.timestamp ? data.timestamp.toDate() : null;
+        const timeStr = dateObj ? dateObj.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : "";
+        const dayStr = dateObj ? dateObj.toLocaleDateString([], {month: 'short', day: 'numeric'}) : "N/A";
+
+        container.innerHTML += `
+          <div class="log-item">
+            <div class="emp-name">${data.employeeName || "Unknown Staff"}</div>
+            <div style="margin-top: 5px;">Finished <span class="area-badge">${data.areaName || data.area || "Unknown Area"}</span></div>
+            <div class="time">${dayStr} at ${timeStr}</div>
+          </div>`;
+      });
+
+      if (snap.empty) {
+        container.innerHTML = "<div style='text-align:center; padding:20px; color:#666;'>No work has been logged yet.</div>";
+      }
+    }
+
+    loadLogs();
+  </script>
+</body>
+</html>

@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Employee Login</title>
+
+  <style>
+
+    /* 01 - GLOBAL STYLE */
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: #eef2f7;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      min-height: 100vh;
+    }
+
+    .card {
+      width: 92%;
+      max-width: 420px;
+
+      background: white;
+
+      border-radius: 30px;
+
+      padding: 35px 25px;
+
+      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+
+      text-align: center;
+    }
+
+    .view-tag {
+      display: inline-block;
+      background: black;
+      color: white;
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      margin: 0 0 35px 0;
+      font-size: 42px;
+      color: #1847d1;
+    }
+
+    input {
+      width: 100%;
+      padding: 22px;
+
+      font-size: 28px;
+
+      border-radius: 18px;
+      border: 2px solid #2e5cff;
+
+      outline: none;
+
+      margin-bottom: 22px;
+      text-align: center;
+    }
+
+    button {
+      width: 100%;
+
+      padding: 22px;
+
+      font-size: 28px;
+      font-weight: bold;
+
+      border: none;
+      border-radius: 18px;
+
+      background: #2e5cff;
+      color: white;
+
+      cursor: pointer;
+
+      margin-bottom: 18px;
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    #message {
+      margin-top: 20px;
+
+      padding: 22px;
+
+      border-radius: 20px;
+
+      font-size: 24px;
+      font-weight: bold;
+
+      background: #edf9ef;
+      color: #1c7a32;
+
+      display: none;
+    }
+
+  
+    /* 99 - MODERN UI REFRESH */
+    :root {
+      --app-bg: #eef3f8;
+      --app-surface: #ffffff;
+      --app-surface-soft: #f7fafc;
+      --app-text: #13202f;
+      --app-muted: #65758b;
+      --app-primary: #1769e0;
+      --app-primary-dark: #0f4fb3;
+      --app-border: #d8e0ea;
+      --app-shadow: 0 14px 38px rgba(20, 42, 72, 0.16);
+      --app-radius: 16px;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(23, 105, 224, 0.13), transparent 30%),
+        linear-gradient(180deg, #f7fbff 0%, var(--app-bg) 100%) !important;
+      color: var(--app-text);
+      font-family: Arial, sans-serif;
+    }
+
+    .card,
+    .page,
+    .admin-card,
+    .room-report-card,
+    .report-card,
+    .task-card,
+    .modal-card,
+    .custom-confirm-box {
+      background: rgba(255,255,255,0.96) !important;
+      border: 1px solid rgba(216, 224, 234, 0.95) !important;
+      border-radius: var(--app-radius) !important;
+      box-shadow: var(--app-shadow) !important;
+    }
+
+    h1, h2, h3 {
+      color: var(--app-text);
+      letter-spacing: 0;
+    }
+
+    .view-tag,
+    .mini-header,
+    .admin-dashboard-title {
+      background: linear-gradient(135deg, #10243d, #1769e0) !important;
+      color: #fff !important;
+      border-radius: 12px !important;
+      box-shadow: 0 8px 20px rgba(23, 105, 224, 0.22) !important;
+    }
+
+    input,
+    select,
+    textarea {
+      border: 1px solid var(--app-border) !important;
+      border-radius: 12px !important;
+      background: #fff !important;
+      color: var(--app-text) !important;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.75) !important;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--app-primary) !important;
+      box-shadow: 0 0 0 3px rgba(23, 105, 224, 0.16) !important;
+    }
+
+    button {
+      border-radius: 13px !important;
+      background: linear-gradient(135deg, var(--app-primary), var(--app-primary-dark)) !important;
+      box-shadow: 0 8px 18px rgba(23, 105, 224, 0.22) !important;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+    }
+
+    button:active {
+      transform: translateY(1px) scale(0.99);
+      box-shadow: 0 5px 12px rgba(23, 105, 224, 0.18) !important;
+    }
+
+    .green {
+      background: linear-gradient(135deg, #16843a, #0f6f31) !important;
+      color: white !important;
+    }
+
+    .yellow {
+      background: linear-gradient(135deg, #ffd65a, #f3aa18) !important;
+      color: #1f2937 !important;
+    }
+
+    .red {
+      background: linear-gradient(135deg, #e34d4d, #b91c1c) !important;
+      color: white !important;
+    }
+
+    .back,
+    .gray,
+    .grey {
+      background: linear-gradient(135deg, #667085, #475467) !important;
+      color: white !important;
+    }
+
+    .room-button-wrap,
+    .area-button,
+    .task-button,
+    .employee-button,
+    .issue-button,
+    .status-row,
+    .summary-card,
+    .report-row,
+    .admin-list-row {
+      border-radius: 14px !important;
+      border: 1px solid rgba(255,255,255,0.38) !important;
+    }
+
+    .room-number {
+      letter-spacing: 0;
+    }
+
+    .room-counter,
+    .summary-label,
+    .small-text {
+      color: var(--app-muted);
+    }
+
+    table {
+      border-radius: 14px;
+      overflow: hidden;
+      background: white;
+      box-shadow: 0 8px 22px rgba(20, 42, 72, 0.08);
+    }
+
+    th {
+      background: #eaf1f8 !important;
+      color: #20324a !important;
+    }
+
+    td, th {
+      border-color: var(--app-border) !important;
+    }
+
+    .loading-bg {
+      backdrop-filter: blur(4px);
+    }
+
+    .spinner {
+      border-color: #d5e3f3 !important;
+      border-top-color: var(--app-primary) !important;
+    }
+
+    @media (max-width: 760px) {
+      body { padding: 8px !important; }
+      .card, .page, .admin-card { border-radius: 16px !important; }
+      button { min-height: 44px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 02 - VIEW 1 LOGIN -->
+
+  <div class="card">
+
+    <div class="view-tag">
+      VIEW 1
+    </div>
+
+    <div id="pinView">
+
+      <h1>Employee Login</h1>
+
+      <input
+        type="password"
+        inputmode="numeric"
+        pattern="[0-9]*"
+        id="pin"
+        placeholder="Enter PIN"
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck="false"
+      >
+
+      <button onclick="checkPin()">
+        NEXT
+      </button>
+
+    </div>
+
+    <div id="message"></div>
+
+  </div>
+
+<script type="module">
+
+  /* 03 - FIREBASE IMPORTS */
+
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+
+  import {
+    getFirestore,
+    collection,
+    query,
+    where,
+    limit,
+    getDocs
+  } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+
+  /* 04 - FIREBASE CONFIG */
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBgq_ooBeEN4noEyIxYPLVokgM6RjCO648",
+    authDomain: "gms-task-tracker.firebaseapp.com",
+    projectId: "gms-task-tracker",
+    storageBucket: "gms-task-tracker.firebasestorage.app",
+    messagingSenderId: "790880979860",
+    appId: "1:790880979860:web:6faee2a6e56955af3c1d81",
+    measurementId: "G-5TRHQMS039"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+
+  /* 05 - LOGIN */
+
+  async function checkPin() {
+    const pinInput = document.getElementById("pin").value.trim();
+
+    if (!pinInput) {
+      showMessage("Enter PIN", false);
+      return;
+    }
+
+    showMessage("Checking...", true);
+
+    try {
+      const employeeQuery = query(
+        collection(db, "employees"),
+        where("pin", "==", pinInput),
+        limit(1)
+      );
+
+      const employeeSnap = await getDocs(employeeQuery);
+
+      if (employeeSnap.empty) {
+        showMessage("Invalid PIN", false);
+        return;
+      }
+
+      const docSnap = employeeSnap.docs[0];
+      const emp = docSnap.data();
+
+      if (!isEmployeeActive(emp)) {
+        showMessage("Inactive employee", false);
+        return;
+      }
+
+      const currentEmployee = buildEmployeeSession_(docSnap.id, emp, pinInput);
+
+      sessionStorage.setItem(
+        "currentEmployee",
+        JSON.stringify(currentEmployee)
+      );
+
+      sessionStorage.setItem(
+        "selectedDailyTask",
+        JSON.stringify({
+          assignment: currentEmployee.defaultSchedule || currentEmployee.assignment,
+          schedule: "Daily"
+        })
+      );
+
+      if (currentEmployee.role === "admin") {
+        window.location.href = "admin.html";
+        return;
+      }
+
+      showMessage("Login successful", true);
+
+      setTimeout(function() {
+        window.location.href = "schedule.html";
+      }, 500);
+
+    } catch (error) {
+      console.error("Login error details:", error);
+      showMessage("Connection error", false);
+    }
+  }
+
+
+  /* 06 - EMPLOYEE SESSION */
+
+  function buildEmployeeSession_(docId, emp, pinInput) {
+    const firstName = cleanText_(emp.firstName || "Employee");
+    const lastName = cleanText_(emp.lastName || "");
+    const employeeName = cleanText_(emp.name || `${firstName} ${lastName}`);
+    const role = cleanText_(emp.role || "employee").toLowerCase();
+    const assignment = cleanText_(emp.assignment || "Housekeeping");
+    const defaultSchedule = cleanText_(emp.defaultSchedule || "");
+
+    return {
+      id: docId,
+      employeeId: cleanText_(emp.employeeId || docId),
+      firstName: firstName,
+      lastName: lastName,
+      employeeName: employeeName,
+      name: employeeName,
+      pin: pinInput,
+      role: role,
+      assignment: assignment,
+      defaultSchedule: defaultSchedule
+    };
+  }
+
+  function isEmployeeActive(emp) {
+    const active = emp.active;
+
+    if (active === false) return false;
+
+    const activeText = cleanText_(active).toLowerCase();
+
+    if (activeText === "no") return false;
+    if (activeText === "false") return false;
+    if (activeText === "inactive") return false;
+
+    return true;
+  }
+
+
+  /* 07 - MESSAGE */
+
+  function showMessage(text, success) {
+    const message = document.getElementById("message");
+
+    message.style.display = "block";
+
+    if (success) {
+      message.style.background = "#edf9ef";
+      message.style.color = "#1c7a32";
+    } else {
+      message.style.background = "#ffecec";
+      message.style.color = "#c62828";
+    }
+
+    message.innerHTML = text;
+  }
+
+
+  /* 08 - HELPERS */
+
+  function cleanText_(value) {
+    if (value === null || value === undefined) return "";
+
+    return String(value)
+      .replace(/\u00A0/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+
+  /* 09 - EVENTS */
+
+  document
+    .getElementById("pin")
+    .addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        checkPin();
+      }
+    });
+
+  window.checkPin = checkPin;
+
+</script>
+
+</body>
+</html>
